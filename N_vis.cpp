@@ -21,8 +21,9 @@ N_vis::~N_vis()
 {
 }
 
-void	N_vis::exit()
+void	N_vis::exit_nv()
 {
+	end();
 	endwin();
 }
 
@@ -49,6 +50,8 @@ void	N_vis::init_vis()
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 	init_pair(3, COLOR_BLACK, COLOR_RED);
+	init_pair(4, COLOR_CYAN, COLOR_BLACK);
+	init_pair(5, COLOR_YELLOW, COLOR_BLACK);
 	create_win();
 }
 
@@ -71,60 +74,84 @@ void	N_vis::create_win()
 		mvwaddch(_menu, 0, i, ' ' | A_STANDOUT);
 		mvwaddch(_menu, 79, i, ' ' | A_STANDOUT);
 	}
-	intro();
-	//menu_bar(_menu, 0, 0, 0,);
+	intro(_big);
 	wrefresh(_retro);
 	wrefresh(_menu);
 }
 
-void	N_vis::intro()
+void	N_vis::intro(WINDOW *big)
 {
-	WINDOW *big;
-
 	big = newwin(W_R, W_R + W_M, 0, 0);
-	std::string	st;
+	std::string		intro;
+	std::string		file_data;
 	int 			y = H_R / 3;
-	int 			x = W_R / 4;
+	int 			x = 18;
 
-	wattron(big, COLOR_PAIR(3));
-	wbkgd(big, COLOR_PAIR(3));
-	st = "\n"
-			"      ___                       ___           ___                 \n"
-			"     /  /\\          ___        /  /\\         /  /\\          ___   \n"
-			"    /  /:/_        /  /\\      /  /::\\       /  /::\\        /  /\\  \n"
-			"   /  /:/ /\\      /  /:/     /  /:/\\:\\     /  /:/\\:\\      /  /:/  \n"
-			"  /  /:/ /::\\    /  /:/     /  /:/~/::\\   /  /:/~/:/     /  /:/   \n"
-			" /__/:/ /:/\\:\\  /  /::\\    /__/:/ /:/\\:\\ /__/:/ /:/___  /  /::\\   \n"
-			" \\  \\:\\/:/~/:/ /__/:/\\:\\   \\  \\:\\/:/__\\/ \\  \\:\\/:::::/ /__/:/\\:\\  \n"
-			"  \\  \\::/ /:/  \\__\\/  \\:\\   \\  \\::/       \\  \\::/~~~~  \\__\\/  \\:\\ \n"
-			"   \\__\\/ /:/        \\  \\:\\   \\  \\:\\        \\  \\:\\           \\  \\:\\\n"
-			"     /__/:/          \\__\\/    \\  \\:\\        \\  \\:\\           \\__\\/\n"
-			"     \\__\\/                     \\__\\/         \\__\\/                \n"
-			"      ___           ___           ___           ___               \n"
-			"     /  /\\         /  /\\         /__/\\         /  /\\              \n"
-			"    /  /:/_       /  /::\\       |  |::\\       /  /:/_             \n"
-			"   /  /:/ /\\     /  /:/\\:\\      |  |:|:\\     /  /:/ /\\            \n"
-			"  /  /:/_/::\\   /  /:/~/::\\   __|__|:|\\:\\   /  /:/ /:/_           \n"
-			" /__/:/__\\/\\:\\ /__/:/ /:/\\:\\ /__/::::| \\:\\ /__/:/ /:/ /\\          \n"
-			" \\  \\:\\ /~~/:/ \\  \\:\\/:/__\\/ \\  \\:\\~~\\__\\/ \\  \\:\\/:/ /:/          \n"
-			"  \\  \\:\\  /:/   \\  \\::/       \\  \\:\\        \\  \\::/ /:/           \n"
-			"   \\  \\:\\/:/     \\  \\:\\        \\  \\:\\        \\  \\:\\/:/            \n"
-			"    \\  \\::/       \\  \\:\\        \\  \\:\\        \\  \\::/             \n"
-			"     \\__\\/         \\__\\/         \\__\\/         \\__\\/              \n";
-
-	for (int i = 0; i < st.size(); i++)
+	wbkgd(big, COLOR_PAIR(3) | A_BOLD);
+	std::ifstream	file("text_intro");
+	if (file.is_open())
 	{
-		if (st[i] == '\n')
+		while (getline(file, file_data))
+			intro += (file_data + '\n');
+	}
+	else
+	{
+		std::cout << "Could not open a file.\n";
+		exit(0);
+	}
+	for (int i = 0; i < intro.size(); i++)
+	{
+		if (intro[i] == '\n')
 		{
 			y++;
-			x = W_R / 4;
+			x = 18;
 			wrefresh(big);
 			napms(100);
 		}
-		mvwaddch(big, y, x++, st[i]);
+		mvwaddch(big, y, x++, intro[i]);
 	}
 	napms(1500);
 	start = std::time(0);
+}
+
+void	N_vis::end()
+{
+	WINDOW *old;
+	old = newwin(W_R, W_R + W_M, 0, 0);
+	std::string end;
+	std::string file_data;
+	int 			y = H_R / 3;
+	int 			x = W_R / 4;
+	int 			c = -1;
+
+	wattron(old, COLOR_PAIR(3));
+	wbkgd(old, COLOR_PAIR(3) | A_BOLD | A_BLINK);
+	wrefresh(old);
+	std::ifstream	file("text_end");
+	if (file.is_open())
+	{
+		while (getline(file, file_data))
+			end += (file_data + '\n');
+	}
+	else
+	{
+		std::cout << "Could not open a file.\n";
+		exit(0);
+	}
+	for (int i = 0; i < end.size(); i++)
+	{
+		if (end[i] == '\n')
+		{
+			y++;
+			x = W_R / 4;
+			wrefresh(old);
+		}
+		mvwaddch(old, y, x++, end[i]);
+	}
+	while (c == -1)
+	{
+		c = (wgetch(old));
+	}
 }
 
 void	N_vis::menu_bar(WINDOW *menu, int score, int lives, int enemy)

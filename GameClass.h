@@ -6,7 +6,7 @@
 #define	HEIGHT  80
 #define OBST_NB 10
 #define BULL_NB 1
-#define LIVES	3
+#define LIVES	1
 
 #include <iostream>
 #include <string>

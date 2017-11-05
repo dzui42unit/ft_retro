@@ -17,6 +17,8 @@
 # include <iostream>
 # include <ctime>
 # include <string>
+#include <zconf.h>
+# include <fstream>
 # include "Player.h"
 
 #define H_R 80
@@ -31,6 +33,7 @@ private:
 
 	WINDOW	*_retro;
 	WINDOW	*_menu;
+	WINDOW	*_big;
 	time_t 	start;
 public:
 
@@ -38,10 +41,11 @@ public:
 	N_vis();
 	N_vis(N_vis const &copy);
 
-	void	exit();
+	void	exit_nv();
 	void	init_vis();
 	void	create_win();
-	void	intro();
+	void	intro(WINDOW *big);
+	void	end();
 	void	menu_bar(WINDOW *menu, int score, int lives, int enemy);
 	WINDOW	*getWin() const;
 	WINDOW	*getMenu() const;

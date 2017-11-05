@@ -18,11 +18,20 @@ void	GameClass::runGame()
 			for (int j = 0; j < WIDTH; j++)
 			{
 				if (map[i][j] == 5)
+				{
+					wattron(win, COLOR_PAIR(4) | A_BOLD);
 					mvwprintw(win, i, j, "%c", '^');
+				}
 				else if (map[i][j] == 2)
+				{
+					wattron(win, COLOR_PAIR(1));
 					mvwprintw(win, i, j, "%c", '@');
+				}
 				else if (map[i][j] == 7)
+				{
+					wattron(win, COLOR_PAIR(5));
 					mvwprintw(win, i, j, "%c", '|');
+				}
 				else
 					map[i][j] != 1 ? mvwprintw(win, i, j, " ") : 0;
 			}
@@ -35,7 +44,7 @@ void	GameClass::runGame()
 		delay = static_cast<useconds_t>(e) / 100000;
 		usleep(delay);
 	}
-	nv->exit();
+	nv->exit_nv();
 }
 
 void	GameClass::checkIntersect()
