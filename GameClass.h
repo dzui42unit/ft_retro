@@ -5,8 +5,13 @@
 #define	WIDTH	80
 #define	HEIGHT  80
 #define OBST_NB 10
-#define BULL_NB 1
+#define BULL_NB 8
 #define LIVES	3
+#define PL_CH	'^'
+#define	LO_CH	'*'
+#define BUL_CH	'|'
+#define HO_CH	'#'
+#define EN_CH 	'$'
 
 #include <iostream>
 #include <string>
@@ -16,8 +21,10 @@
 
 #include "Player.h"
 #include "LightObstacle.h"
+#include "HeavyObstacle.h"
 #include "N_vis.hpp"
 #include "BulletClass.h"
+#include "Enemy.h"
 
 class 			GameClass
 {
@@ -25,10 +32,12 @@ private:
 	int 				**map;
 	Player				*pl;
 	LightObstacle		**lo;
+	HeavyObstacle		**ho;
 	N_vis				*nv;
 	WINDOW				*win;
 	WINDOW				*menu;
 	BulletClass			**bul;
+	Enemy				**l_enem;
 	unsigned long 		score;
 	unsigned long		kill;
 	unsigned long long 	cycles;

@@ -12,6 +12,7 @@ private:
 	int 	posX;
 	int 	posY;
 	int 	lives;
+	int 	map_nb;
 public:
 			Player();
 			~Player();

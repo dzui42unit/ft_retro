@@ -14,6 +14,11 @@ Obstacle::~Obstacle()
 
 }
 
+int 	Obstacle::getHP() const
+{
+	return (hp);
+}
+
 Obstacle::Obstacle(const Obstacle &ob)
 {
 	posX = ob.posX;
@@ -48,12 +53,9 @@ int 	Obstacle::getY()
 
 
 
-void	Obstacle::takeDamage(int **map)
+void	Obstacle::takeDamage()
 {
 	hp--;
-	if (hp == 0)
-		generatePosition(map);
-
 }
 
 void	Obstacle::generatePosition(int **map)

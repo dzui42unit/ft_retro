@@ -71,8 +71,7 @@ void	N_vis::create_win()
 		mvwaddch(_menu, 0, i, ' ' | A_STANDOUT);
 		mvwaddch(_menu, 79, i, ' ' | A_STANDOUT);
 	}
-	intro();
-	//menu_bar(_menu, 0, 0, 0,);
+//	intro();
 	wrefresh(_retro);
 	wrefresh(_menu);
 }
@@ -131,7 +130,7 @@ void	N_vis::menu_bar(WINDOW *menu, int score, int lives, int enemy)
 {
 	wattrset(menu, COLOR_PAIR(1) | A_BOLD);
 	mvwprintw(_menu,5, 5, "TIME: %02d : %02d", (time(0) - start) / 60, (time(0) - start) % 60);
-	mvwprintw(menu, 10 , 5, "STORE: %d", score);
+	mvwprintw(menu, 10 , 5, "SCORE: %d", score);
 	mvwprintw(menu, 15 , 5, "KILL ENEMY: %d", enemy);
 	mvwprintw(menu, 20 , 5, "LIVE: %d", lives);
 	wrefresh(menu);

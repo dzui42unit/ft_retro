@@ -18,8 +18,9 @@ public:
 						Obstacle();
 	virtual		 		~Obstacle();
 						Obstacle(const Obstacle &ob);
-	void 				takeDamage(int **map);
+	void 				takeDamage();
 	virtual void		generatePosition(int **map);
+	int 				getHP() const;
 	virtual void		setHP();
 	Obstacle			&operator=(const Obstacle &ob);
 };

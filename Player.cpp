@@ -15,11 +15,13 @@ Player::Player(const Player &pl)
 	posX = pl.posX;
 	posY = pl.posY;
 	lives = pl.lives;
+	map_nb = pl.map_nb;
 }
 
 Player	&Player::operator=(const Player &pl)
 {
 	lives = pl.lives;
+	map_nb = pl.map_nb;
 	posX = pl.posX;
 	posY = pl.posY;
 	return (*this);
@@ -30,6 +32,7 @@ Player::Player()
 	lives = LIVES;
 	posY = HEIGHT - 2;
 	posX = WIDTH / 2;
+	map_nb = 5;
 }
 
 Player::~Player()
@@ -68,7 +71,7 @@ void	Player::movePlayer(WINDOW *win, int **map)
 		{
 			map[posY][posX] = 0;
 			posY--;
-			map[posY][posX] = 5;
+			map[posY][posX] = map_nb;
 
 		}
 	}
@@ -79,7 +82,7 @@ void	Player::movePlayer(WINDOW *win, int **map)
 		{
 			map[posY][posX] = 0;
 			posX--;
-			map[posY][posX] = 5;
+			map[posY][posX] = map_nb;
 		}
 	}
 	if (ch == 's')
@@ -89,7 +92,7 @@ void	Player::movePlayer(WINDOW *win, int **map)
 		{
 			map[posY][posX] = 0;
 			posY++;
-			map[posY][posX] = 5;
+			map[posY][posX] = map_nb;
 		}
 	}
 	if (ch == 'd')
@@ -99,7 +102,7 @@ void	Player::movePlayer(WINDOW *win, int **map)
 		{
 			map[posY][posX] = 0;
 			posX++;
-			map[posY][posX] = 5;
+			map[posY][posX] = map_nb;
 		}
 	}
 	if (ch == 'r')
@@ -119,5 +122,5 @@ void	Player::decrLives(int **map)
 	lives--;
 	posY = HEIGHT - 2;
 	posX = WIDTH / 2;
-	map[posY][posX] = 5;
+	map[posY][posX] = map_nb;
 }
