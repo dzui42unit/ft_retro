@@ -1,4 +1,5 @@
 #include "Obstacle.h"
+#include "GameClass.h"
 
 Obstacle::Obstacle()
 {
@@ -35,14 +36,37 @@ int 	Obstacle::getX()
 	return (posX);
 }
 
+void	Obstacle::setHP()
+{
+	hp = 0;
+}
+
 int 	Obstacle::getY()
 {
 	return (posY);
+}
+
+
+
+void	Obstacle::takeDamage(int **map)
+{
+	hp--;
+	if (hp == 0)
+		generatePosition(map);
+
+}
+
+void	Obstacle::generatePosition(int **map)
+{
+	posX = 0;
+	posY = 0;
+	map[posY][posX] = 0;
 }
 
 void	Obstacle::moveObstacle(int **map)
 {
 	map[posY][posX] = 0;
 	posY++;
-	map[posY][posX] = map_nb;
+	if (posY != HEIGHT - 1)
+		map[posY][posX] = map_nb;
 }

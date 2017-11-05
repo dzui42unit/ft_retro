@@ -14,6 +14,8 @@ public:
 	explicit		LightObstacle(int **map);
 					~LightObstacle();
 					LightObstacle(const LightObstacle &lo);
+	void			setHP();
+	void			generatePosition(int **map);
 	LightObstacle	&operator=(const LightObstacle &lo);
 };
 

@@ -14,10 +14,8 @@ LightObstacle::~LightObstacle()
 
 }
 
-LightObstacle::LightObstacle(int **map)
+void		LightObstacle::generatePosition(int **map)
 {
-	hp = 1;
-	map_nb = 2;
 	posY = 1 + std::rand() % HEIGHT / 8;
 	posX = 1 + std::rand() % WIDTH;
 	while (map[posY][posX] != 0)
@@ -26,6 +24,19 @@ LightObstacle::LightObstacle(int **map)
 		posX = 1 + std::rand() % WIDTH;
 	}
 	map[posY][posX] = map_nb;
+	setHP();
+}
+
+void		LightObstacle::setHP()
+{
+	hp = 2;
+}
+
+LightObstacle::LightObstacle(int **map)
+{
+	hp = 1;
+	map_nb = 2;
+	generatePosition(map);
 }
 
 LightObstacle::LightObstacle(const LightObstacle &lo)

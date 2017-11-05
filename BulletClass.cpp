@@ -48,3 +48,19 @@ void		BulletClass::moveObstacle(int **map)
 	posY--;
 	map[posY][posX] = map_nb;
 }
+
+void		BulletClass::generatePosition(int **map, int y, int x)
+{
+	if (posY == 0)
+		map[posY][posX] = 1;
+	else
+		map[posY][posX] = 0;
+	posY = y - 1;
+	posX = x;
+	map[posY][posX] = map_nb;
+}
+
+void		BulletClass::setHP()
+{
+	hp = 1;
+}

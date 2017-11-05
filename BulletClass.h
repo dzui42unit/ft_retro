@@ -15,6 +15,8 @@ public:
 				BulletClass(const BulletClass &bul);
 	BulletClass	&operator=(const BulletClass &bul);
 	void		moveObstacle(int **map);
+	void		generatePosition(int **map, int y, int x);
+	void		setHP();
 };
 
 
