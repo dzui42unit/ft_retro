@@ -1,5 +1,17 @@
-#include "LightObstacle.h"
-#include "GameClass.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   LightObstacle.cpp                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/11/05 21:33:49 by dzui              #+#    #+#             */
+/*   Updated: 2017/11/05 21:33:52 by dzui             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "LightObstacle.hpp"
+#include "GameClass.hpp"
 
 LightObstacle::LightObstacle()
 {

@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Enemy.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/05 21:36:45 by dzui              #+#    #+#             */
-/*   Updated: 2017/11/05 21:36:46 by dzui             ###   ########.fr       */
+/*   Created: 2017/11/05 21:33:11 by dzui              #+#    #+#             */
+/*   Updated: 2017/11/05 21:33:13 by dzui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "GameClass.hpp"
+#ifndef CPP_RUSH_00_ENEMY_H
+#define CPP_RUSH_00_ENEMY_H
 
-int 	main(void)
+#include "Obstacle.hpp"
+
+
+class Enemy : public Obstacle
 {
-	GameClass	game_cycle;
+public:
+						Enemy();
+				 		~Enemy();
+						Enemy(const Enemy &ob);
+	void				setHP();
+	explicit			Enemy(int **map);
+	void				generatePosition(int **map);
+	Enemy				&operator=(const Enemy &ob);
+};
 
-	game_cycle.runGame();
-	return (0);
-}
+
+#endif //CPP_RUSH_00_ENEMY_H

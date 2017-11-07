@@ -1,43 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BulletClass.cpp                                    :+:      :+:    :+:   */
+/*   EnemyBullet.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/05 21:33:20 by dzui              #+#    #+#             */
-/*   Updated: 2017/11/05 21:34:51 by dzui             ###   ########.fr       */
+/*   Created: 2017/11/05 21:35:25 by dzui              #+#    #+#             */
+/*   Updated: 2017/11/05 21:35:27 by dzui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BulletClass.hpp"
+#include "EnemyBullet.hpp"
+#include "GameClass.hpp"
 
-BulletClass::BulletClass()
+EnemyBullet::EnemyBullet()
 {
 	posX = 0;
 	posY = 0;
 	hp = 0;
-	map_nb = 7;
+	map_nb = 6;
 }
 
-BulletClass::BulletClass(int **map, int y, int x)
+EnemyBullet::EnemyBullet(int **map, int y, int x)
 {
 	hp = 1;
-	map_nb = 7;
-	if (y - 1 != 0 && map[y - 1][x] == 0)
+	map_nb = 6;
+	if (y + 1 != HEIGHT - 1)
 	{
-		posY = y - 1;
+		posY = y + 1;
 		posX = x;
 		map[posY][posX] = map_nb;
 	}
 }
 
-BulletClass::~BulletClass()
+EnemyBullet::~EnemyBullet()
 {
 
 }
 
-BulletClass::BulletClass(const BulletClass &ob)
+EnemyBullet::EnemyBullet(const EnemyBullet &ob)
 {
 	posX = ob.posX;
 	posY = ob.posY;
@@ -45,7 +46,7 @@ BulletClass::BulletClass(const BulletClass &ob)
 	map_nb = ob.map_nb;
 }
 
-BulletClass	&BulletClass::operator=(const BulletClass &ob)
+EnemyBullet	&EnemyBullet::operator=(const EnemyBullet &ob)
 {
 	hp = ob.hp;
 	posY = ob.posY;
@@ -54,25 +55,34 @@ BulletClass	&BulletClass::operator=(const BulletClass &ob)
 	return (*this);
 }
 
-void		BulletClass::moveObstacle(int **map)
+void		EnemyBullet::moveObstacle(int **map)
 {
 	map[posY][posX] = 0;
-	posY--;
+	posY++;
 	map[posY][posX] = map_nb;
 }
 
-void		BulletClass::generatePosition(int **map, int y, int x)
+void		EnemyBullet::generatePosition(int **map, int y, int x)
 {
-	if (posY == 0)
-		map[posY][posX] = 1;
-	else
+	if (y < HEIGHT - 3)
+	{
 		map[posY][posX] = 0;
-	posY = y - 1;
-	posX = x;
-	map[posY][posX] = map_nb;
+		posY = y + 1;
+		posX = x;
+		map[posY][posX] = map_nb;
+	}
+	else
+	{
+		map[posY][posX] = 0;
+		posY = HEIGHT - 1;
+		posX = x;
+		map[posY][posX] = 1;
+	}
+	if (posY == HEIGHT - 1)
+		map[posY][posX] = 1;
 }
 
-void		BulletClass::setHP()
+void		EnemyBullet::setHP()
 {
 	hp = 1;
 }

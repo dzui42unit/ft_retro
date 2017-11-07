@@ -11,7 +11,7 @@
 // ************************************************************************** //
 
 #include "N_vis.hpp"
-#include "GameClass.h"
+#include "GameClass.hpp"
 
 N_vis::N_vis()
 {
@@ -21,8 +21,9 @@ N_vis::~N_vis()
 {
 }
 
-void	N_vis::exit()
+void	N_vis::exit_nv()
 {
+	end();
 	endwin();
 }
 
@@ -42,6 +43,7 @@ void	N_vis::init_vis()
 	signal (SIGWINCH, NULL);
 	_retro = newwin(W_R, H_R, 0, 0);
 	_menu = newwin(H_M, W_M, 0, H_M);
+	raw();
 	cbreak();
 	noecho();
 	curs_set(0);
@@ -49,6 +51,10 @@ void	N_vis::init_vis()
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_WHITE, COLOR_BLACK);
 	init_pair(3, COLOR_BLACK, COLOR_RED);
+	init_pair(4, COLOR_CYAN, COLOR_BLACK);
+	init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(6, COLOR_GREEN, COLOR_BLACK);
+	init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
 	create_win();
 }
 
@@ -71,67 +77,109 @@ void	N_vis::create_win()
 		mvwaddch(_menu, 0, i, ' ' | A_STANDOUT);
 		mvwaddch(_menu, 79, i, ' ' | A_STANDOUT);
 	}
-//	intro();
+	intro(_big);
 	wrefresh(_retro);
 	wrefresh(_menu);
 }
 
-void	N_vis::intro()
+void	N_vis::intro(WINDOW *big)
 {
-	WINDOW *big;
-
 	big = newwin(W_R, W_R + W_M, 0, 0);
-	std::string	st;
+	std::string		intro;
+	std::string		file_data;
 	int 			y = H_R / 3;
-	int 			x = W_R / 4;
+	int 			x = 18;
 
-	wattron(big, COLOR_PAIR(3));
-	wbkgd(big, COLOR_PAIR(3));
-	st = "\n"
-			"      ___                       ___           ___                 \n"
-			"     /  /\\          ___        /  /\\         /  /\\          ___   \n"
-			"    /  /:/_        /  /\\      /  /::\\       /  /::\\        /  /\\  \n"
-			"   /  /:/ /\\      /  /:/     /  /:/\\:\\     /  /:/\\:\\      /  /:/  \n"
-			"  /  /:/ /::\\    /  /:/     /  /:/~/::\\   /  /:/~/:/     /  /:/   \n"
-			" /__/:/ /:/\\:\\  /  /::\\    /__/:/ /:/\\:\\ /__/:/ /:/___  /  /::\\   \n"
-			" \\  \\:\\/:/~/:/ /__/:/\\:\\   \\  \\:\\/:/__\\/ \\  \\:\\/:::::/ /__/:/\\:\\  \n"
-			"  \\  \\::/ /:/  \\__\\/  \\:\\   \\  \\::/       \\  \\::/~~~~  \\__\\/  \\:\\ \n"
-			"   \\__\\/ /:/        \\  \\:\\   \\  \\:\\        \\  \\:\\           \\  \\:\\\n"
-			"     /__/:/          \\__\\/    \\  \\:\\        \\  \\:\\           \\__\\/\n"
-			"     \\__\\/                     \\__\\/         \\__\\/                \n"
-			"      ___           ___           ___           ___               \n"
-			"     /  /\\         /  /\\         /__/\\         /  /\\              \n"
-			"    /  /:/_       /  /::\\       |  |::\\       /  /:/_             \n"
-			"   /  /:/ /\\     /  /:/\\:\\      |  |:|:\\     /  /:/ /\\            \n"
-			"  /  /:/_/::\\   /  /:/~/::\\   __|__|:|\\:\\   /  /:/ /:/_           \n"
-			" /__/:/__\\/\\:\\ /__/:/ /:/\\:\\ /__/::::| \\:\\ /__/:/ /:/ /\\          \n"
-			" \\  \\:\\ /~~/:/ \\  \\:\\/:/__\\/ \\  \\:\\~~\\__\\/ \\  \\:\\/:/ /:/          \n"
-			"  \\  \\:\\  /:/   \\  \\::/       \\  \\:\\        \\  \\::/ /:/           \n"
-			"   \\  \\:\\/:/     \\  \\:\\        \\  \\:\\        \\  \\:\\/:/            \n"
-			"    \\  \\::/       \\  \\:\\        \\  \\:\\        \\  \\::/             \n"
-			"     \\__\\/         \\__\\/         \\__\\/         \\__\\/              \n";
-
-	for (int i = 0; i < st.size(); i++)
+	wbkgd(big, COLOR_PAIR(3) | A_BOLD);
+	std::ifstream	file("text_intro");
+	if (file.is_open())
 	{
-		if (st[i] == '\n')
+		while (getline(file, file_data))
+			intro += (file_data + '\n');
+	}
+	else
+	{
+		std::cout << "Could not open a file.\n";
+		exit(0);
+	}
+	for (int i = 0; i < intro.size(); i++)
+	{
+		if (intro[i] == '\n')
 		{
 			y++;
-			x = W_R / 4;
+			x = 18;
 			wrefresh(big);
 			napms(100);
 		}
-		mvwaddch(big, y, x++, st[i]);
+		mvwaddch(big, y, x++, intro[i]);
 	}
 	napms(1500);
 	start = std::time(0);
+}
+
+void	N_vis::end()
+{
+	WINDOW *old;
+	old = newwin(W_R, W_R + W_M, 0, 0);
+	std::string end;
+	std::string file_data;
+	int 			y = H_R / 3;
+	int 			x = W_R / 4;
+	int 			c = -1;
+
+	wattron(old, COLOR_PAIR(3));
+	wbkgd(old, COLOR_PAIR(3) | A_BOLD | A_BLINK);
+	wrefresh(old);
+	std::ifstream	file("text_end");
+	if (file.is_open())
+	{
+		while (getline(file, file_data))
+			end += (file_data + '\n');
+	}
+	else
+	{
+		std::cout << "Could not open a file.\n";
+		exit(0);
+	}
+	for (int i = 0; i < end.size(); i++)
+	{
+		if (end[i] == '\n')
+		{
+			y++;
+			x = W_R / 4;
+			wrefresh(old);
+		}
+		mvwaddch(old, y, x++, end[i]);
+	}
+	while (c != 'q')
+	{
+		c = (wgetch(old));
+	}
 }
 
 void	N_vis::menu_bar(WINDOW *menu, int score, int lives, int enemy)
 {
 	wattrset(menu, COLOR_PAIR(1) | A_BOLD);
 	mvwprintw(_menu,5, 5, "TIME: %02d : %02d", (time(0) - start) / 60, (time(0) - start) % 60);
-	mvwprintw(menu, 10 , 5, "SCORE: %d", score);
+	mvwprintw(menu, 10 , 5, "STORE: %d", score);
 	mvwprintw(menu, 15 , 5, "KILL ENEMY: %d", enemy);
 	mvwprintw(menu, 20 , 5, "LIVE: %d", lives);
 	wrefresh(menu);
+}
+
+N_vis::N_vis(N_vis const &copy)
+{
+	_retro = copy._retro;
+	_menu = copy._menu;
+	_big = copy._big;
+	start = copy.start;
+}
+
+N_vis &N_vis::operator=(const N_vis &copy)
+{
+	_retro = copy._retro;
+	_menu = copy._menu;
+	_big = copy._big;
+	start = copy.start;
+	return (*this);
 }

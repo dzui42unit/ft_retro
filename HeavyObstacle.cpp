@@ -1,5 +1,18 @@
-#include "HeavyObstacle.h"
-#include "GameClass.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HeavyObstacle.cpp                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/11/05 21:36:10 by dzui              #+#    #+#             */
+/*   Updated: 2017/11/05 21:36:11 by dzui             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#include "HeavyObstacle.hpp"
+#include "GameClass.hpp"
 
 HeavyObstacle::HeavyObstacle()
 {

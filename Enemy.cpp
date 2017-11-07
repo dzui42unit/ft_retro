@@ -1,5 +1,18 @@
-#include "Enemy.h"
-#include "GameClass.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Enemy.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/11/05 21:33:03 by dzui              #+#    #+#             */
+/*   Updated: 2017/11/05 21:33:04 by dzui             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#include "Enemy.hpp"
+#include "GameClass.hpp"
 
 Enemy::Enemy()
 {
@@ -28,12 +41,12 @@ void		Enemy::setHP()
 
 void		Enemy::generatePosition(int **map)
 {
-	posY = 1 + std::rand() % HEIGHT / 15;
-	posX = 1 + std::rand() % WIDTH;
+	posY = 2 + std::rand() % HEIGHT / 2;
+	posX = 2 + std::rand() % (WIDTH - 2);
 	while (map[posY][posX] != 0)
 	{
-		posY = 1 + std::rand() % HEIGHT / 15;
-		posX = 1 + std::rand() % WIDTH;
+		posY = 2 + std::rand() % HEIGHT / 2;
+		posX = 2 + std::rand() % (WIDTH - 2);
 	}
 	map[posY][posX] = map_nb;
 	setHP();
