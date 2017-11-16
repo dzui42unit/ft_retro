@@ -19,6 +19,6 @@ He gets 20 points for 'w'
 
 He hets 50 points for 'V'
 
-Screenshot of 
+Screenshot of a game
 
 ![sss](https://user-images.githubusercontent.com/28359156/32889358-4c438dba-cad3-11e7-8996-1df868ccd034.png)
